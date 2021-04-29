@@ -1,0 +1,24 @@
+syntax = "proto3";
+package pb;
+option go_package = "pb";
+
+message FileInfo {
+  string name = 1;
+  uint32 size = 2;
+}
+
+message UploadFileRequest {
+  oneof data {
+    FileInfo info = 1;
+    bytes chunk_data = 2;
+  }
+}
+
+message UploadFileResponse {
+  string id = 1;
+  uint32 size = 2;
+}
+
+service LaptopService {
+  rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse) {};
+}
